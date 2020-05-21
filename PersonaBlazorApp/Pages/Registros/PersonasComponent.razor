@@ -3,6 +3,8 @@
 @using PersonaBlazorApp.Models
 @using PersonaBlazorApp.BLL
 
+@inject IToastService toast
+
 <h3>Registro de Personas</h3>
 
 <EditForm Model="personas" OnValidSubmit="Guardar">
@@ -78,12 +80,11 @@
     private void Nuevo()
     {
         this.personas = new Personas();
-        estado = "";
     }
 
     protected override void OnInitialized()
     {
-        Nuevo(); 
+        Nuevo();
         if (personaId > 0)
         {
             personas = PersonasBLL.Buscar(personaId);
@@ -98,26 +99,23 @@
         if (paso)
         {
             Nuevo();
-            //toast.ShowSuccess("Guardado correctamente");
-            estado = "Guardado...";
+            toast.ShowSuccess("Guardado correctamente");
         }
         else
         {
-            estado = "No se pudo guardar...";
+            toast.ShowError("No fue posible guardar");
         }
-        //toast.ShowError("No fue posible guardar");
+
     }
 
     private void Buscar()
     {
         var encontrado = PersonasBLL.Buscar(personas.personaId);
         if (encontrado != null)
-
             this.personas = encontrado;
         else
-
-            //toast.ShowWarning("No encontrado");
-            estado = "no se encontro..";
+           toast.ShowWarning("No encontrado");
+            
     }
 
     private void Eliminar()
@@ -129,11 +127,9 @@
         if (elimino)
         {
             Nuevo();
-            estado = "Eliminado...";
-            //toast.ShowSuccess("Eliminado correctamente");
+            toast.ShowSuccess("Eliminado correctamente");
         }
         else
-            estado = "No se pudo eliminar..";
-        //toast.ShowError("No fue posible eliminar");
+            toast.ShowError("No fue posible eliminar");
     }
 }
