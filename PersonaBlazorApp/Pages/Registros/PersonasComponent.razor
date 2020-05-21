@@ -83,8 +83,11 @@
 
     protected override void OnInitialized()
     {
-        Nuevo(); //siempre se hace nuevo
-
+        Nuevo(); 
+        if (personaId > 0)
+        {
+            personas = PersonasBLL.Buscar(personaId);
+        }
     }
 
     private void Guardar()
