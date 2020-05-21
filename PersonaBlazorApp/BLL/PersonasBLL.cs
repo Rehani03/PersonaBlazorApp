@@ -52,7 +52,6 @@ namespace PersonaBlazorApp.BLL
             try
             {
 
-                //marcar la entidad como modificada para que el contexto sepa como proceder
                 contexto.Entry(personas).State = EntityState.Modified;
                 paso = contexto.SaveChanges() > 0;
 
@@ -75,11 +74,10 @@ namespace PersonaBlazorApp.BLL
 
             try
             {
-                //buscar la entidad que se desea eliminar
                 var auxPersona = contexto.Personas.Find(id);
                 if (auxPersona != null)
                 {
-                    contexto.Personas.Remove(auxPersona);//remover la entidad
+                    contexto.Personas.Remove(auxPersona);//remueve la entidad
                     paso = contexto.SaveChanges() > 0;
 
                 }
